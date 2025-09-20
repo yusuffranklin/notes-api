@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: notes-api
+  name: notes-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: notes-api
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: notes-api
+    spec:
+      containers:
+      - image: yusuffranklin/notes-api:latest
+        name: notes-api
+        resources: {}
+status: {}
