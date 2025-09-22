@@ -1,0 +1,5 @@
+project_id = "gcp-project"
+db_instance_name = "db-instance-name"
+db_user = "postgres"
+db_password = "secretpassword"
+db_name = "test_db"
