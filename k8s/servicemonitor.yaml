@@ -1,14 +1,15 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: hello-services
+  name: notes-api
   labels:
-    release: monitoring
+    release: prometheus
 spec:
+  namespaceSelector:
+    any: true
   selector:
     matchLabels:
       app: notes-api
   endpoints:
     - port: http
-      path: /metrics
       interval: 15s

@@ -7,7 +7,8 @@ metadata:
   name: notes-api-svc
 spec:
   ports:
-  - port: 80
+  - name: http
+    port: 80
     protocol: TCP
     targetPort: 8080
   selector:
