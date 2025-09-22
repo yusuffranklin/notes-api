@@ -1,7 +1,7 @@
 resource "google_sql_database_instance" "sandbox" {
   name             = var.db_instance_name
   region           = "asia-southeast2"
-  database_version = "POSTGRES_17"
+  database_version = "POSTGRES_15"
 
   settings {
     tier = "db-f1-micro"
