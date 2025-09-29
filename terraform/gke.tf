@@ -10,7 +10,7 @@ module "gke" {
   zones                      = ["asia-southeast2-a"]
   network                    = "default"
   subnetwork                 = "default"
-  ip_range_pods              = "secondary-ip-range"
+  ip_range_pods              = google_compute_subnetwork.network_with_secondary_ip_ranges.secondary_ip_range[0].range_name
   http_load_balancing        = true
   network_policy             = false
   horizontal_pod_autoscaling = false
@@ -21,12 +21,12 @@ module "gke" {
   node_pools = [
     {
       name                        = "default-node-pool"
-      machine_type                = "n1-standard-1"
+      machine_type                = "e2-medium"
       node_locations              = "asia-southeast2-a"
-      min_count                   = 1
-      max_count                   = 1
+      min_count                   = 3
+      max_count                   = 3
       spot                        = false
-      disk_size_gb                = 100
+      disk_size_gb                = 60
       disk_type                   = "pd-standard"
       image_type                  = "COS_CONTAINERD"
       preemptible                 = true

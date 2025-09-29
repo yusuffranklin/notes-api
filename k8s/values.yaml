@@ -1,0 +1,36 @@
+deployment:
+  replicaCount: 2
+  image:
+    name: yusuffranklin/notes-api
+    tag: latest
+  resources:
+    requests:
+      cpu: "20m"
+      memory: "10Mi"
+    limits:
+      cpu: "70m"
+      memory: "20Mi"
+  env:
+    - name: POSTGRES_URL
+      secretName: postgres-creds
+      secretKey: POSTGRES_URL
+
+service:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+
+autoscaling:
+  enabled: true
+  type: keda
+  maxReplicas: 5
+  minReplicas: 2
+  triggers:
+    - type: prometheus
+      serverAddress: "http://prometheus-kube-prometheus-prometheus.monitoring.svc:9090"
+      metricName: promhttp_metric_handler_requests_total
+      threshold: "0.05"
+      query: sum(rate(promhttp_metric_handler_requests_total{code="200", job="notes-api-svc"}[1m]))

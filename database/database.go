@@ -4,14 +4,20 @@ import (
 	"database/sql"
 	"os"
 
+	"github.com/yusuffranklin/notes-api/logger"
 	"go.uber.org/zap"
 )
 
 var (
-	Db     *sql.DB
-	err    error
-	logger *zap.Logger
+	Db  *sql.DB
+	err error
+	// logger *zap.Logger
+	_ Row = &sql.Row{}
 )
+
+type Row interface {
+	Scan(dest ...interface{}) error
+}
 
 func InitDB() {
 	connStr := os.Getenv("POSTGRES_URL")

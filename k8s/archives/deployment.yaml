@@ -6,11 +6,15 @@ metadata:
     app: notes-api
   name: notes-api
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: notes-api
-  strategy: {}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   template:
     metadata:
       creationTimestamp: null

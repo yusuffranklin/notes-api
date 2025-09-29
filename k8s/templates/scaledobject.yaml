@@ -1,0 +1,34 @@
+{{- if .Values.autoscaling.enabled }}
+{{- if eq (.Values.autoscaling.type) "keda" }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Release.Name }}
+    release: prometheus
+spec:
+  scaleTargetRef:
+    name: {{ .Release.Name }}           
+  minReplicaCount: {{ .Values.autoscaling.minReplicas }}       
+  maxReplicaCount: {{ .Values.autoscaling.maxReplicas }}       
+  pollingInterval: 15      
+  triggers:
+  {{- range .Values.autoscaling.triggers }}
+    - type: {{ .type }}
+      metadata:
+      {{- if .serverAddress }}
+        serverAddress: {{ .serverAddress }}
+      {{- end }}
+      {{- if .metricName }}
+        metricName: {{ .metricName }}
+      {{- end }}
+      {{- if .threshold }}
+        threshold: "{{ .threshold }}" 
+      {{- end }}   
+      {{- if .query }}
+        query: {{ .query }}
+      {{- end }}
+  {{- end }}
+{{- end }}
+{{- end }}

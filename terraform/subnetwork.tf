@@ -14,8 +14,12 @@ resource "google_compute_subnetwork" "network_with_secondary_ip_ranges" {
   region        = "asia-southeast2"
   network       = data.google_compute_network.default.id
   secondary_ip_range {
-    range_name    = "secondary-ip-range"
-    ip_cidr_range = "192.168.10.0/24"
+    range_name    = "pods-ip"
+    ip_cidr_range = "192.168.0.0/16"
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
 
