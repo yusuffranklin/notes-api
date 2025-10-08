@@ -21,6 +21,10 @@ type Row interface {
 
 func InitDB() {
 	connStr := os.Getenv("POSTGRES_URL")
+	if connStr == "" {
+		logger.Fatal("Missing 'POSTGRES_URL' environment variable")
+	}
+
 	Db, err = sql.Open("postgres", connStr)
 	if err != nil {
 		logger.Fatal("Error connecting to database: ", zap.Error(err))
