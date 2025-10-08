@@ -17,7 +17,7 @@ Notes API has four APIs that can:
 7. OpenTelemetry
 
 ## Architecture
-![alt text](https://github.com/yusuffranklin/notes-api/blob/main/architecture.png?raw=true)
+![alt text](https://github.com/yusuffranklin/notes-api/blob/main/images/architecture.png)
 
 ## How To Run
 1. Build and Push Docker Image
