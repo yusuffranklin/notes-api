@@ -21,6 +21,7 @@ Notes API has four APIs that can:
 
 ## How To Run
 1. Build and Push Docker Image
+
 `docker buildx build -t <your-image-repo>/notes-api:latest . --push`
 
 2. Provision GCP Resources
@@ -45,10 +46,17 @@ terraform apply
 
 3. Run the Application on Kubernetes
 - Install Prometheus Stack
+
 `helm install prometheus prometheus-community/kube-prometheus-stack --set grafana.enabled=false -n monitoring --create-namespace`
 
 - Install Keda
+
 `helm install keda kedacore/keda -n keda --create-namespace`
 
+- Create Kubernetes Secret
+
+`kubectl create secret generic postgres-creds --from-literal=POSTGRES_URL="postgres://<postgres-user>:<postgres-password>@<postgres-url>:<postgres-port>/<db-name>?sslmode=disable"`
+
 - Run notes-api with Helm. Make sure you are in `k8s/` directory.
+
 `helm install notes-api .`
